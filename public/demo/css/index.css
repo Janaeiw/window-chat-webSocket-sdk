@@ -47,10 +47,6 @@ iframe {
     min-height: 600px;
     border-radius: 16px;
   }
-
-  .wi-launcher {
-    transform: unset !important;
-  }
 }
 
 @media only screen and (max-width: 667px) {
