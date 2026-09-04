@@ -1,43 +1,339 @@
 /**
- * @description: 屏幕滚动吸附盒子
- * @param {document} global
- * @param {*} factory
+ * @description: 拖动元素，并且具有惯性和边缘反弹效果
  * @return {*}
  * @Author: Janaeiw
- * @Date: 2022/07/07 10:26
+ * @Date: 2026/09/04
  */
 
-eval(
-  (function (e, f, a, d, c, g) {
-    c = function (b) {
-      return (
-        (b < f ? "" : c(parseInt(b / f))) +
-        (35 < (b %= f) ? String.fromCharCode(b + 29) : b.toString(36))
-      );
+(function (global, factory) {
+  if (typeof define === "function" && (define.amd || define.cmd)) {
+    define(factory);
+  } else {
+    global.Inertia = factory();
+  }
+})(this, function () {
+  "use strict";
+
+  var Inertia = function (ele, options) {
+    var defaults = {
+      // 是否吸附边缘
+      edge: true,
     };
-    if (!"".replace(/^/, String)) {
-      for (; a--; ) g[c(a)] = d[a] || c(a);
-      d = [
-        function (b) {
-          return g[b];
-        }
-      ];
-      c = function () {
-        return "\\w+";
-      };
-      a = 1;
+
+    var params = {};
+    options = options || {};
+    for (var key in defaults) {
+      if (typeof options[key] !== "undefined") {
+        params[key] = options[key];
+      } else {
+        params[key] = defaults[key];
+      }
     }
-    for (; a--; )
-      d[a] && (e = e.replace(new RegExp("\\b" + c(a) + "\\b", "g"), d[a]));
-    return e;
-  })(
-    "(9(a,b){4(1h Q==='9'&&(Q.1w||Q.1x)){Q(b)}E{a.1y=b()}})(1z,9(){'1A 1B';3 C=9(l,m){3 n={1i:G,};3 o={};m=m||{};1C(3 p 1D n){4(1h m[p]!=='1E'){o[p]=m[p]}E{o[p]=n[p]}}3 q={8:0,6:0,};3 r=1F;3 s=r.1G;3 u=r.1H;4(!l){D}3 v=9(x,y){x=J.1j(R*x)/R;y=J.1j(R*y)/R;l.15.1I='1J('+[x+'S',y+'S'].T(',')+')';l.15.1K='1L('+[x+'S',y+'S',0].T(',')+')'};3 w='';4(l.U&&r.K&&(w=K['17'+l.U])){3 z=w.1M(',');l.8=+z[0];l.6=+z[1];v(l.8,l.6)}l.15.1N='1O';3 A=l.V();4(A.L<-0.5*A.W||A.X<-0.5*A.18||A.Y>s+0.5*A.W||A.19>u+0.5*A.18){l.8=0;l.6=0;v(0,0)}l.1a('1P',9(a){3 b=a.1k[0]||a;q.1b=b.1l;q.1c=b.1m;q.M=G;4(l.8){q.8=l.8}4(l.6){q.6=l.6}q.O=l.V();q.1d=G});3 B=9(t,b,c,d){4((t/=d)<1/2.I){D c*(7.Z*t*t)+b}E 4(t<2/2.I){D c*(7.Z*(t-=1.5/2.I)*t+0.I)+b}E 4(t<2.5/2.I){D c*(7.Z*(t-=2.1n/2.I)*t+0.1Q)+b}E{D c*(7.Z*(t-=2.1R/2.I)*t+0.1S)+b}};1o.1a('1T',9(a){4(q.M!==G){D}4(q.1d==G){q.1p=+1q 1r();q.1d=F}a.1U();3 b=a.1k[0]||a;q.11=b.1l;q.12=b.1m;3 c=q.11-q.1b,6=q.12-q.1c;3 d=q.O.L+c,13=q.O.X+6,1e=d+q.O.W,1f=13+q.O.18;4(d<0){c=c-d}4(13<0){6=6-13}4(1e>s){c=c-(1e-s)}4(1f>u){6=6-(1f-u)}3 x=q.8+c,y=q.6+6;v(x,y);l.8=x;l.6=y},{1V:F,},);1o.1a('1W',9(){4(q.M===F){D}q.M=F;q.1s=+1q 1r();4(!q.11||!q.12){D}3 e=q.11-q.1b,6=q.12-q.1c;4(J.1t(e)<5&&J.1t(6)<5){D}3 f=J.1X(e*e+6*6),1u=q.1s-q.1p;3 g=(f/1u)*16.1Y;3 h=J.1Z(10,g);q.P=G;3 i=1,N=1;3 j=9(){4(q.M==G){q.P=F;D}g=g-g/h;3 a=(i*g*e)/f,H=(N*g*6)/f;3 b=l.V();4(a<0&&b.L+a<0){a=0-b.L;i=i*-1}E 4(a>0&&b.Y+a>s){a=s-b.Y;i=i*-1}4(H<0&&b.X+H<0){H=-1*b.X;N=-1*N}E 4(H>0&&b.19+H>u){H=u-b.19;N=-1*N}3 x=l.8+a,y=l.6+H;v(x,y);l.8=x;l.6=y;4(g<0.1){g=0;4(o.1i==F){q.P=F;4(r.K){K['17'+l.U]=[x,y].T()}}E{k()}}E{1v(j)}};3 k=9(){3 a=0,1g=1n;3 b=l.8,y=l.6,14=0;3 c=l.V();4(c.L+c.W/2<s/2){14=-1*c.L}E{14=s-c.Y}3 d=9(){4(q.M==G){q.P=F;D}a++;3 x=B(a,b,14,1g);v(x,y);4(a<1g){1v(d)}E{l.8=x;l.6=y;q.P=F;4(r.K){K['17'+l.U]=[x,y].T()}}};d()};j()})};D C});",
-    62,
-    124,
-    "   var if  distanceY  distanceX function                              return else false true moveY 75 Math localStorage left touching reverseY bound inertiaing define 1000 px join id getBoundingClientRect width top right 5625  nowX nowY absTop change style  Inertia_ height bottom addEventListener posX posY timerready absRight absBottom during typeof edge round touches pageX pageY 25 document timerstart new Date timerend abs time requestAnimationFrame amd cmd Inertia this use strict for in undefined window innerWidth innerHeight webkitTransform translate transform translate3d split visibility visible touchstart 9375 625 984375 touchmove preventDefault passive touchend sqrt 666 min".split(
-      " "
-    ),
-    0,
-    {}
-  )
-);
+
+    var data = {
+      distanceX: 0,
+      distanceY: 0,
+    };
+
+    var win = window;
+
+    // 浏览器窗体尺寸
+    var winWidth = win.innerWidth;
+    var winHeight = win.innerHeight;
+
+    // 窗口尺寸变化时，重新计算窗口尺寸，将拖拽元素初始化位置
+    window.addEventListener("resize", function () {
+      ele.distanceX = 0;
+      ele.distanceY = 0;
+      fnTranslate(0, 0);
+      winWidth = win.innerWidth;
+      winHeight = win.innerHeight;
+    });
+
+    if (!ele) {
+      return;
+    }
+
+    // 设置transform坐标等方法
+    var fnTranslate = function (x, y) {
+      x = Math.round(1000 * x) / 1000;
+      y = Math.round(1000 * y) / 1000;
+
+      ele.style.webkitTransform = "translate(" + [x + "px", y + "px"].join(",") + ")";
+      ele.style.transform = "translate3d(" + [x + "px", y + "px", 0].join(",") + ")";
+    };
+
+    var strStoreDistance = "";
+    // 居然有android机子不支持localStorage
+    if (ele.id && win.localStorage && (strStoreDistance = localStorage["Inertia_" + ele.id])) {
+      var arrStoreDistance = strStoreDistance.split(",");
+      ele.distanceX = +arrStoreDistance[0];
+      ele.distanceY = +arrStoreDistance[1];
+      fnTranslate(ele.distanceX, ele.distanceY);
+    }
+
+    // 显示拖拽元素
+    ele.style.visibility = "visible";
+
+    // 如果元素在屏幕之外，位置使用初始值
+    var initBound = ele.getBoundingClientRect();
+
+    if (
+      initBound.left < -0.5 * initBound.width ||
+      initBound.top < -0.5 * initBound.height ||
+      initBound.right > winWidth + 0.5 * initBound.width ||
+      initBound.bottom > winHeight + 0.5 * initBound.height
+    ) {
+      ele.distanceX = 0;
+      ele.distanceY = 0;
+      fnTranslate(0, 0);
+    }
+
+    ele.addEventListener("touchstart", function (event) {
+      // if (data.inertiaing) {
+      //   return;
+      // }
+
+      var events = event.touches[0] || event;
+
+      data.posX = events.pageX;
+      data.posY = events.pageY;
+
+      data.touching = true;
+
+      if (ele.distanceX) {
+        data.distanceX = ele.distanceX;
+      }
+      if (ele.distanceY) {
+        data.distanceY = ele.distanceY;
+      }
+
+      // 元素的位置数据
+      data.bound = ele.getBoundingClientRect();
+
+      data.timerready = true;
+    });
+
+    // easeOutBounce算法
+    /*
+     * t: current time（当前时间）；
+     * b: beginning value（初始值）；
+     * c: change in value（变化量）；
+     * d: duration（持续时间）。
+     **/
+    var easeOutBounce = function (t, b, c, d) {
+      if ((t /= d) < 1 / 2.75) {
+        return c * (7.5625 * t * t) + b;
+      } else if (t < 2 / 2.75) {
+        return c * (7.5625 * (t -= 1.5 / 2.75) * t + 0.75) + b;
+      } else if (t < 2.5 / 2.75) {
+        return c * (7.5625 * (t -= 2.25 / 2.75) * t + 0.9375) + b;
+      } else {
+        return c * (7.5625 * (t -= 2.625 / 2.75) * t + 0.984375) + b;
+      }
+    };
+
+    document.addEventListener(
+      "touchmove",
+      function (event) {
+        if (data.touching !== true) {
+          return;
+        }
+
+        // 当移动开始的时候开始记录时间
+        if (data.timerready == true) {
+          data.timerstart = +new Date();
+          data.timerready = false;
+        }
+
+        event.preventDefault();
+
+        var events = event.touches[0] || event;
+
+        data.nowX = events.pageX;
+        data.nowY = events.pageY;
+
+        var distanceX = data.nowX - data.posX,
+          distanceY = data.nowY - data.posY;
+
+        // 此时元素的位置
+        var absLeft = data.bound.left + distanceX,
+          absTop = data.bound.top + distanceY,
+          absRight = absLeft + data.bound.width,
+          absBottom = absTop + data.bound.height;
+
+        // 边缘检测
+        if (absLeft < 0) {
+          distanceX = distanceX - absLeft;
+        }
+        if (absTop < 0) {
+          distanceY = distanceY - absTop;
+        }
+        if (absRight > winWidth) {
+          distanceX = distanceX - (absRight - winWidth);
+        }
+        if (absBottom > winHeight) {
+          distanceY = distanceY - (absBottom - winHeight);
+        }
+
+        // 元素位置跟随
+        var x = data.distanceX + distanceX,
+          y = data.distanceY + distanceY;
+        fnTranslate(x, y);
+
+        // 缓存移动位置
+        ele.distanceX = x;
+        ele.distanceY = y;
+      },
+      {
+        // fix #3 #5
+        passive: false,
+      },
+    );
+
+    document.addEventListener("touchend", function () {
+      if (data.touching === false) {
+        // fix iOS fixed bug
+        return;
+      }
+      data.touching = false;
+
+      // 计算速度
+      data.timerend = +new Date();
+
+      if (!data.nowX || !data.nowY) {
+        return;
+      }
+
+      // 移动的水平和垂直距离
+      var distanceX = data.nowX - data.posX,
+        distanceY = data.nowY - data.posY;
+
+      if (Math.abs(distanceX) < 5 && Math.abs(distanceY) < 5) {
+        return;
+      }
+
+      // 距离和时间
+      var distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY),
+        time = data.timerend - data.timerstart;
+
+      // 速度，每一个自然刷新此时移动的距离
+      var speed = (distance / time) * 16.666;
+
+      // 经测试，2~60多px不等
+      // 设置衰减速率
+      // 数值越小，衰减越快
+      var rate = Math.min(10, speed);
+
+      // 开始惯性缓动
+      data.inertiaing = true;
+
+      // 反弹的参数
+      var reverseX = 1,
+        reverseY = 1;
+
+      // 速度计算法
+      var step = function () {
+        if (data.touching == true) {
+          data.inertiaing = false;
+          return;
+        }
+        speed = speed - speed / rate;
+
+        // 根据运动角度，分配给x, y方向
+        var moveX = (reverseX * speed * distanceX) / distance,
+          moveY = (reverseY * speed * distanceY) / distance;
+
+        // 此时元素的各个数值
+        var bound = ele.getBoundingClientRect();
+
+        if (moveX < 0 && bound.left + moveX < 0) {
+          moveX = 0 - bound.left;
+          // 碰触边缘方向反转
+          reverseX = reverseX * -1;
+        } else if (moveX > 0 && bound.right + moveX > winWidth) {
+          moveX = winWidth - bound.right;
+          reverseX = reverseX * -1;
+        }
+
+        if (moveY < 0 && bound.top + moveY < 0) {
+          moveY = -1 * bound.top;
+          reverseY = -1 * reverseY;
+        } else if (moveY > 0 && bound.bottom + moveY > winHeight) {
+          moveY = winHeight - bound.bottom;
+          reverseY = -1 * reverseY;
+        }
+
+        var x = ele.distanceX + moveX,
+          y = ele.distanceY + moveY;
+        // 位置变化
+        fnTranslate(x, y);
+
+        ele.distanceX = x;
+        ele.distanceY = y;
+
+        if (speed < 0.1) {
+          speed = 0;
+          if (params.edge == false) {
+            data.inertiaing = false;
+
+            if (win.localStorage) {
+              localStorage["Inertia_" + ele.id] = [x, y].join();
+            }
+          } else {
+            // 边缘吸附
+            edge();
+          }
+        } else {
+          requestAnimationFrame(step);
+        }
+      };
+
+      var edge = function () {
+        // 时间
+        var start = 0,
+          during = 25;
+        // 初始值和变化量
+        var init = ele.distanceX,
+          y = ele.distanceY,
+          change = 0;
+        // 判断元素现在在哪个半区
+        var bound = ele.getBoundingClientRect();
+        if (bound.left + bound.width / 2 < winWidth / 2) {
+          change = -1 * bound.left;
+        } else {
+          change = winWidth - bound.right;
+        }
+
+        var run = function () {
+          // 如果用户触摸元素，停止继续动画
+          if (data.touching == true) {
+            data.inertiaing = false;
+            return;
+          }
+
+          start++;
+          var x = easeOutBounce(start, init, change, during);
+          fnTranslate(x, y);
+
+          if (start < during) {
+            requestAnimationFrame(run);
+          } else {
+            ele.distanceX = x;
+            ele.distanceY = y;
+
+            data.inertiaing = false;
+            if (win.localStorage) {
+              localStorage["Inertia_" + ele.id] = [x, y].join();
+            }
+          }
+        };
+        run();
+      };
+
+      step();
+    });
+  };
+
+  return Inertia;
+});
