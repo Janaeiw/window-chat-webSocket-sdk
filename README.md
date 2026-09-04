@@ -1,6 +1,6 @@
 # 前述
 
-基于 vue3 + vite + vantUI + sass + viewport 适配方案 +axios 封装，构建手机端模板脚手架，想查看模板 demo 的可以[点这里](https://janaeiw.github.io/beautiful-chat-webSocket/)，这个是js-sdk的demo[点这里](https://janaeiw.github.io/beautiful-chat-webSocket/demo/index.html)
+基于 vue3 + vite + vantUI + sass + viewport 适配方案 +axios 封装，构建手机端模板脚手架，想查看模板 demo 的可以[点这里](https://janaeiw.github.io/window-chat-webSocket-sdk/)，这个是js-sdk的demo[点这里](https://janaeiw.github.io/window-chat-webSocket-sdk/demo/index.html)
 
 # 项目介绍
 
@@ -15,7 +15,7 @@
 ```bash
 git clone
 
-cd beautiful-chat-webSocket
+cd window-chat-webSocket-sdk
 
 npm install
 

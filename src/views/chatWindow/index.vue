@@ -3,7 +3,7 @@
  * @Date: 2022/06/30 18:10
  * @LastEditTime: 2022/08/12 15:31
  * @LastEditors: Janaeiw
- * @FilePath: \beautiful-chat-webSocket\src\views\chatWindow\index.vue
+ * @FilePath: \window-chat-webSocket-sdk\src\views\chatWindow\index.vue
  * @Description: '聊天窗口'
 -->
 

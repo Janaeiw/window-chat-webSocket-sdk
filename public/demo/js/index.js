@@ -3,11 +3,11 @@
  * @Date: 2022/07/06 13:49
  * @LastEditTime: 2022/08/12 16:21
  * @LastEditors: Janaeiw
- * @FilePath: \beautiful-chat-webSocket\public\demo\js\index.js
+ * @FilePath: \window-chat-webSocket-sdk\public\demo\js\index.js
  * @Description: 'wichat-jssdk'
  */
 
-const origin = '/beautiful-chat-webSocket'
+const origin = '/window-chat-webSocket-sdk'
 
 window.onload = function () {
   loadStyle(origin + '/demo/css/iconfont.css')

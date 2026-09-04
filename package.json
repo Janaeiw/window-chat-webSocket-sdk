@@ -1,5 +1,5 @@
 {
-  "name": "beautiful-chat-webSocket",
+  "name": "window-chat-webSocket-sdk",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
